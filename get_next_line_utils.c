@@ -23,25 +23,36 @@ size_t ft_strlen(char *str)
 }
 
 /* per trovare la corrispondenza in \n */
-char *ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (s[i] != '\0' && s[i] != (char)c)
-        i++;
-    if (s[i] == (char)c)
-        return ((char *)s + i);
-    return (NULL);
+	if (!s)
+		return (NULL);
+	i = ft_strlen(s) + 1;
+	while (i--)
+	{
+		if (*s == (char) c)
+			return ((char *) s);
+		s++;
+	}
+	return (0);
 }
 
 /* per concatenare le stringhe */
-char *ft_strjoin(char const *s1, char const *s2)
+char *ft_strjoin(char *s1, char *s2)
 {
     char *s3;
     int i;
     int j;
 
+	if (!s1)
+	{
+		s1 = (char *) malloc (sizeof(char) * 1);
+		s1[0] = '\0';
+	}
+	if (!s1 || !s2)
+		return (NULL);
     i = ft_strlen((char *)s1) + ft_strlen((char *)s2);
     s3 = (char *)malloc(sizeof(char) * (i + 1));
     i = 0;

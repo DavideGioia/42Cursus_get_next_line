@@ -12,66 +12,60 @@
 
 #include "get_next_line.h"
 
-size_t ft_strlen(char *str)
+size_t	ft_strlen(char *s)
 {
-    int i;
+	size_t	i;
 
-    i = 0;
-    while (str[i] != '\0')
-        i++;
-    return (i);
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }
 
-/* per trovare la corrispondenza in \n */
 char	*ft_strchr(char *s, int c)
 {
 	int	i;
 
+	i = 0;
 	if (!s)
-		return (NULL);
-	i = ft_strlen(s) + 1;
-	while (i--)
+		return (0);
+	if (c == '\0')
+		return ((char *)&s[ft_strlen(s)]);
+	while (s[i] != '\0')
 	{
-		if (*s == (char) c)
-			return ((char *) s);
-		s++;
+		if (s[i] == (char) c)
+			return ((char *)&s[i]);
+		i++;
 	}
 	return (0);
 }
 
-/* per concatenare le stringhe */
-char *ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *left_str, char *buff)
 {
-    char *s3;
-    int i;
-    int j;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-	if (!s1)
+	if (!left_str)
 	{
-		s1 = (char *) malloc (sizeof(char) * 1);
-		s1[0] = '\0';
+		left_str = (char *)malloc(1 * sizeof(char));
+		left_str[0] = '\0';
 	}
-	if (!s1 || !s2)
+	if (!left_str || !buff)
 		return (NULL);
-    i = ft_strlen((char *)s1) + ft_strlen((char *)s2);
-    s3 = (char *)malloc(sizeof(char) * (i + 1));
-    i = 0;
-    j = 0;
-    if (!s3)
-        return (0);
-    while (s1[j] != '\0')
-    {
-        s3[i] = s1[j];
-        j++;
-        i++;
-    }
-    j = 0;
-    while (s2[j] != '\0')
-    {
-        s3[i] = s2[j];
-        j++;
-        i++;
-    }
-    s3[i] = '\0';
-    return (s3);
+	str = malloc(sizeof(char) * ((ft_strlen(left_str) + ft_strlen(buff)) + 1));
+	if (str == NULL)
+		return (NULL);
+	i = -1;
+	j = 0;
+	if (left_str)
+		while (left_str[++i] != '\0')
+			str[i] = left_str[i];
+	while (buff[j] != '\0')
+		str[i++] = buff[j++];
+	str[ft_strlen(left_str) + ft_strlen(buff)] = '\0';
+	free(left_str);
+	return (str);
 }
